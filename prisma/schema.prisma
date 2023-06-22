@@ -1,0 +1,52 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Admin {
+  id       Int    @id @default(autoincrement())
+  email    String @unique
+  name     String
+  password String
+}
+
+model Adress {
+  id            Int         @id @default(autoincrement())
+  Name          String
+  Number        Int
+  zipCode       Int
+  Neighbor      String
+  city          String
+  State         String
+  destination   Destination @relation(fields: [destinationId], references: [id])
+  destinationId Int
+  routeId       Int
+}
+
+model Delivery {
+  id      Int    @id @default(autoincrement())
+  name    String
+  vehicle String
+}
+
+model Destination {
+  id      Int      @id @default(autoincrement())
+  name    String
+  code    String
+  adress  Adress[]
+  route   Route    @relation(fields: [routeId], references: [id])
+  routeId Int
+}
+
+model Route {
+  id          Int           @id @default(autoincrement())
+  name        String
+  destination Destination[]
+}
