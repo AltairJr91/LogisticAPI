@@ -1,3 +1,4 @@
+# WORK IN PROGRESS
 # Documentação da API de Logística
 
 Bem-vindo à documentação da API de Logística! Esta API foi desenvolvida para atender às necessidades de empresas de logística, oferecendo recursos para gerenciar usuários administradores, entregadores, meios de entrega, endereços, destinos e rotas de entrega. A API foi implementada em TypeScript e utiliza o banco de dados SQLite com o Prisma ORM. O projeto é totalmente orientado a objetos, seguindo os princípios SOLID, e possui uma arquitetura modular que permite alta escalabilidade.
