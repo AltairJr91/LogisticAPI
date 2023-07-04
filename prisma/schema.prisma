@@ -20,14 +20,12 @@ model Admin {
 model Adress {
   id            Int         @id @default(autoincrement())
   Name          String
-  Number        Int
-  zipCode       Int
+  ZipCode       Int
   Neighbor      String
-  city          String
+  City          String
   State         String
-  destination   Destination @relation(fields: [destinationId], references: [id])
-  destinationId Int
-  routeId       Int
+  Destination   Destination @relation(fields: [DestinationId], references: [id])
+  DestinationId Int
 }
 
 model Delivery {
@@ -39,6 +37,7 @@ model Delivery {
 model Destination {
   id      Int      @id @default(autoincrement())
   name    String
+  addresNumber Int
   code    String
   adress  Adress[]
   route   Route    @relation(fields: [routeId], references: [id])

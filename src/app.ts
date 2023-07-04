@@ -9,9 +9,9 @@ export class App {
 
     constructor(){
         this.express = express();
-        this.listen();
         this.midllewares();
         this.routes();
+        this.listen();
     }
 
     public getApp(): express.Application{

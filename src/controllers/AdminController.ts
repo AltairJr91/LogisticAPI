@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { prisma } from "../database/prisma";
 import { LoginResponse } from "../interfaces/LoginResponseInterface";
-import { hash } from "bcrypt";
+import { hash, compare } from "bcrypt";
 
 class AdminController {
 
@@ -20,19 +20,16 @@ class AdminController {
     return res.json(storeAdmin)
   }
 
-  public async adminAuthorization(req: Request, res: Response): Promise<LoginResponse> {
-    const { email } = req.body;
+  public async adminAuthorization(req: Request, res: Response): Promise<Response> {
+    const { email, password } = req.body;
     const adminAuth = await prisma.admin.findUnique({ where: { email } });
+    
+    const matchPassword = await compare(password, adminAuth?.password as string);
 
-    const loginResponse = {
-      login: adminAuth?.email,
-      password: adminAuth?.password,
-    };
-
-    return loginResponse;
+    return res.json(adminAuth?.name) ;
   }
 
-  
+
 
 }
 

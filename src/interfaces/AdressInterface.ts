@@ -1,14 +1,10 @@
 
 interface Adresses {
   Name: String
-  Number: Number
-  zipCode: Number
+  ZipCode: Number
   Neighbor: String
-  city: String
+  City: String
   State: String
-  destination: String
-  destinationId: Number
-  routeId: Number
 }
 
 export default Adresses;
