@@ -17,35 +17,25 @@ model Admin {
   password String
 }
 
-model Adress {
-  id            Int         @id @default(autoincrement())
-  Name          String
-  ZipCode       Int
-  Neighbor      String
-  City          String
-  State         String
-  Destination   Destination @relation(fields: [DestinationId], references: [id])
-  DestinationId Int
-}
-
 model Delivery {
-  id      Int    @id @default(autoincrement())
+  id      Int     @id @default(autoincrement())
   name    String
   vehicle String
+  route   Route[]
 }
 
 model Destination {
-  id      Int      @id @default(autoincrement())
+  id      Int    @id @default(autoincrement())
   name    String
-  addresNumber Int
-  code    String
-  adress  Adress[]
-  route   Route    @relation(fields: [routeId], references: [id])
-  routeId Int
+  address String
+  route   Route?  @relation(fields: [routeId], references: [id])
+  routeId Int?
 }
 
 model Route {
   id          Int           @id @default(autoincrement())
   name        String
   destination Destination[]
+  delivery    Delivery      @relation(fields: [deliveryId], references: [id])
+  deliveryId  Int
 }

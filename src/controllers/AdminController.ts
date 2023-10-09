@@ -13,23 +13,19 @@ class AdminController {
       data: {
         name,
         email,
-        password:encryptedPassword
+        password: encryptedPassword
       }
     });
-  
-    return res.json(storeAdmin)
-  }
-
-  public async adminAuthorization(req: Request, res: Response): Promise<Response> {
-    const { email, password } = req.body;
-    const adminAuth = await prisma.admin.findUnique({ where: { email } });
     
-    const matchPassword = await compare(password, adminAuth?.password as string);
-
-    return res.json(adminAuth?.name) ;
+    return res.status(200).json({Admin:storeAdmin.name})
   }
 
+  public async getAdmin(req: Request, res: Response): Promise<Response>{
+   
+    const getAdmin = await prisma.admin.findMany()
 
+    return res.status(200).json(getAdmin)
+  }
 
 }
 

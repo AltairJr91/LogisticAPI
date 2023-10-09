@@ -1,26 +1,19 @@
 import { Request, Response } from "express";
 import { prisma } from "../database/prisma";
-import Adresses from "../interfaces/AdressInterface";
-
-
 
 
 class Adress {
   public async storeAdress(req: Request, res: Response): Promise<Response> {
     try {
-      const { name, zipCode, neighbor, city, state, destination, destinationId } = req.body;
-      const storeAdress: Adresses = await prisma.adress.create({
+      const { name, address} = req.body;
+      const storeClient = await prisma.destination.create({
         data: {
-          Name: name,
-          ZipCode: zipCode,
-          Neighbor: neighbor,
-          City: city,
-          State: state,
-          Destination: destination,
-          DestinationId: destinationId
+          name,
+          address,
         }
-      });
-      return res.json(storeAdress);
+      })
+
+      return res.status(201).json(storeClient);
     } catch (error) {
       return res.status(500).json({ error: 'Failed to store address' });
     }

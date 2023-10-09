@@ -4,6 +4,7 @@
   "description": "API for logistic routes delivery",
   "main": "server.ts",
   "scripts": {
+    "start":"nodemon src/server.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Altair Junior",

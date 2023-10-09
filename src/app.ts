@@ -5,7 +5,7 @@ import {router}  from "./routes/routes";
 
 export class App {
     private express: express.Application;
-    private port = 8006;
+    private port = 8007;
 
     constructor(){
         this.express = express();
