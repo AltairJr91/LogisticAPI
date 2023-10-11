@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
 import { prisma } from "../database/prisma";
-import { LoginResponse } from "../interfaces/LoginResponseInterface";
 import { hash, compare } from "bcrypt";
 
 class AdminController {
