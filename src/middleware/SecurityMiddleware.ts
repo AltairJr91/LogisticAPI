@@ -3,12 +3,6 @@ import { verify } from "jsonwebtoken";
 import { prisma } from "../database/prisma";
 import { UserInterface } from "../interfaces/UsersInterface";
 
-//type for where clause
-type AdminWhereInput = {
-    id: number;
-};
-
-
 export function MiddleWare(req: Request, res: Response, next: NextFunction) {
 
     const { authorization } = req.headers;
@@ -26,7 +20,7 @@ export function MiddleWare(req: Request, res: Response, next: NextFunction) {
 
     try {
         const userToken = verify(token, secretKey) as UserInterface;
-        const whereCondition: AdminWhereInput = {
+        const whereCondition = {
             id: userToken.id,
         };
         const decodedUser = prisma.admin.findUnique({ where: whereCondition })

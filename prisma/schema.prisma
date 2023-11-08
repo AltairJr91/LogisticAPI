@@ -11,31 +11,31 @@ datasource db {
 }
 
 model Admin {
-  id       Int    @id @default(autoincrement())
+  id       String @id @default(uuid())
   email    String @unique
   name     String
   password String
 }
 
-model Delivery {
-  id      Int     @id @default(autoincrement())
+model Driver {
+  id      String  @id @default(uuid())
   name    String
   vehicle String
   route   Route[]
 }
 
 model Destination {
-  id      Int    @id @default(autoincrement())
+  id      String @id @default(uuid())
   name    String
   address String
-  route   Route?  @relation(fields: [routeId], references: [id])
-  routeId Int?
+  route   Route? @relation(fields: [routeId], references: [id])
+  routeId String?
 }
 
 model Route {
-  id          Int           @id @default(autoincrement())
+  id          String        @id @default(uuid())
   name        String
   destination Destination[]
-  delivery    Delivery      @relation(fields: [deliveryId], references: [id])
-  deliveryId  Int
+  driver    Driver      @relation(fields: [driverId], references: [id])
+  driverId  String
 }
