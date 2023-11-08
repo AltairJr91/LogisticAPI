@@ -24,19 +24,9 @@ Para começar a utilizar a API de Logística, siga as etapas abaixo:
 - Listagem de entregadores: Retorna a lista de todos os entregadores cadastrados no sistema.
 - Detalhes do entregador: Permite obter informações detalhadas sobre um entregador específico, incluindo os destinos associados a ele.
 
-### Meios de Entrega
-
-- Cadastro de meio de entrega: Permite adicionar um novo meio de entrega ao sistema, como moto, carro, bicicleta etc.
-- Listagem de meios de entrega: Retorna a lista de todos os meios de entrega disponíveis.
-
-### Endereços
-
-- Cadastro de endereço: Permite adicionar um novo endereço ao sistema, incluindo informações como nome da rua, número, cidade, estado etc.
-- Listagem de endereços: Retorna a lista de todos os endereços cadastrados no sistema.
-
 ### Destinos
 
-- Cadastro de destino: Permite adicionar um novo destino ao sistema, associando-o a um endereço específico.
+- Cadastro de destino: Permite adicionar um novo destino ao sistema, associando-o a um "Cliente" e a um endereço específico.
 - Listagem de destinos: Retorna a lista de todos os destinos cadastrados no sistema.
 
 ### Rotas de Entrega
@@ -48,13 +38,5 @@ Para começar a utilizar a API de Logística, siga as etapas abaixo:
 ## Executando a API
 
 1. Execute o comando `npm start` para iniciar o servidor da API.
-2. Acesse a API através da URL `http://localhost:3000`.
+2. Acesse a API através da URL `http://localhost:8007`.
 
-## Contribuição
-
-Contribuições são sempre bem-vindas! Se você deseja contribuir com este projeto, siga as etapas abaixo:
-
-1. Faça um fork do repositório.
-2. Crie um branch com a sua feature (`git checkout -b minha-feature`).
-3. Faça o commit das suas alterações (`git commit -m 'Adicionando nova funcionalidade'`).
-4. Faça o push do branch (`git push
