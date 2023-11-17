@@ -24,10 +24,21 @@ class AdminController {
 
   }
 
+  public async index(req: Request, res: Response): Promise<Response> {
+    try {
+     
+      const getAdmin = await prisma.admin.findMany()
+
+      return res.status(200).json({ message: "Admins Return", Admin: getAdmin })
+    } catch (error) {
+      return res.status(500).json({ message: "Error: cannot find admins" });
+    }
+  }
+
   public async show(req: Request, res: Response): Promise<Response> {
     try {
       const { id } = req.params;
-      const getAdmin = await prisma.admin.findFirst({ where: { id: id } })
+      const getAdmin = await prisma.admin.findFirst({ where: { id: id } ,select:{ id:true ,email:true ,name: true}})
 
       return res.status(200).json({ message: "Admin Return", Admin: getAdmin })
     } catch (error) {

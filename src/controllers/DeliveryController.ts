@@ -8,11 +8,10 @@ class DeliveryController {
     try {
       const { name, vehicle, route } = req.body;
 
-      const storeDelivery: Delivery = await prisma.delivery.create({
+      const storeDelivery: Delivery = await prisma.driver.create({
         data: {
           name,
           vehicle,
-          route
         }
       });
 
@@ -26,7 +25,7 @@ class DeliveryController {
   public async show(req: Request, res: Response): Promise<Response> {
     try {
       const { id } = req.params;
-      const deliver = await prisma.delivery.findFirst({ where: { id: id } });
+      const deliver = await prisma.driver.findFirst({ where: { id: id } });
 
       return res.status(200).json({ message: "Result Delivery", delivery: deliver });
     } catch (error) {
@@ -37,7 +36,7 @@ class DeliveryController {
 
   public async index(req: Request, res: Response): Promise<Response> {
     try {
-      const getDeliverys = await prisma.delivery.findMany()
+      const getDeliverys = await prisma.driver.findMany()
 
       return res.status(200).json(getDeliverys)
     } catch (error) {
@@ -49,7 +48,7 @@ class DeliveryController {
   public async delete(req: Request, res: Response): Promise<Response> {
     try {
       const { id } = req.params;
-      const delDelivery = await prisma.delivery.delete({ where: { id: id } })
+      const delDelivery = await prisma.driver.delete({ where: { id: id } })
 
       return res.status(200).json(delDelivery)
     } catch (error) {
@@ -62,12 +61,11 @@ class DeliveryController {
     try {
       const { name, vehicle, route } = req.body;
       const { id } = req.params;
-      const updateDelivery: Delivery = await prisma.delivery.update({
+      const updateDelivery: Delivery = await prisma.driver.update({
         where: { id },
         data: {
           name,
           vehicle,
-          route
         }
       });
       return res.status(200).json(updateDelivery)

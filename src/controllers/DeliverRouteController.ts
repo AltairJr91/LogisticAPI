@@ -24,14 +24,18 @@ class Route {
       return res.status(201).json({ message: "Route created", storeRoute: storeRoute });
 
     } catch (error) {
-      return res.status(500).json({ error: 'Failed to store Route' });
+      return res.status(500).json({ error: 'Failed to store Route', errorMessage: error });
     }
   }
 
   public async index(req: Request, res: Response): Promise<Response> {
     try {
-      const readRoutes = await prisma.route.findMany()
-      return res.status(200).json(readRoutes);
+      const readRoutes = await prisma.route.findMany({
+        include: { destination: true, driver: true },
+      });
+      const readDrivers = await prisma.driver.findMany();
+      const readClients = await prisma.destination.findMany();
+      return res.status(200).json({ readRoutes, readDrivers, readClients });
     } catch (error) {
       return res.status(500).json({ error: 'Failed to index Route' });
     }
@@ -41,7 +45,10 @@ class Route {
   public async show(req: Request, res: Response): Promise<Response> {
     try {
       const { id } = req.params;
-      const route = await prisma.route.findFirst({ where: { id: id } })
+      const route = await prisma.route.findFirst({
+        where: { id: id },
+        include: { destination: true, driver: true },
+      })
       return res.status(200).json({ message: "Return route ", route: route });
     } catch (err) {
       return res.status(500).json({ error: "Failed to find route" });
@@ -51,8 +58,7 @@ class Route {
   public async update(req: Request, res: Response): Promise<Response> {
     try {
       const { id } = req.params;
-      const { name, driverId, destinations } = req.body;
-
+      const { name, driverId, destinationsId } = req.body;
       const updatedRoute = await prisma.route.update({
         where: {
           id,
@@ -61,15 +67,12 @@ class Route {
           name,
           driver: { connect: { id: driverId } },
           destination: {
-            create: destinations.map((destination: any) => ({
-              name: destination.name,
-              address: destination.address,
-            })),
+            set: destinationsId.map((id: string) => ({ id })),
           },
         },
         include: {
           destination: true,
-          driver: true, 
+          driver: true,
         },
       });
 

@@ -3,19 +3,22 @@ import { verify } from "jsonwebtoken";
 import { prisma } from "../database/prisma";
 import { UserInterface } from "../interfaces/UsersInterface";
 
-export function MiddleWare(req: Request, res: Response, next: NextFunction) {
+interface CustomRequest extends Request {
+  userId?: String;
+}
 
+export async function MiddleWare(req: CustomRequest, res: Response, next: NextFunction) {
     const { authorization } = req.headers;
+
     if (!authorization) {
-        res.status(401).json({ Error: "Token not provided" })
+        return res.status(401).json({ Error: "Token not provided" });
     }
 
-    const [, token] = authorization!.split(" ")
+    const [, token] = authorization!.split(" ");
     const secretKey = process.env.SECRET_KEY;
 
     if (!secretKey) {
-        return console.log("not token provided");
-
+        return console.log("Secret key not provided");
     }
 
     try {
@@ -23,23 +26,17 @@ export function MiddleWare(req: Request, res: Response, next: NextFunction) {
         const whereCondition = {
             id: userToken.id,
         };
-        const decodedUser = prisma.admin.findUnique({ where: whereCondition })
+
+        const decodedUser = await prisma.admin.findUnique({ where: whereCondition });
 
         if (!decodedUser) {
-            return res.status(400).json({ Message: "User not exists" })
+            return res.status(400).json({ Message: "User not exists" });
         }
 
-        req.admin = decodedUser;
+        req.userId = decodedUser.id;
 
         return next();
-
     } catch (error) {
-        res.status(404).json({ Error: error })
+        return res.status(404).json({ Error: error });
     }
-
-
 }
-
-
-
-
